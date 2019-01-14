@@ -1,0 +1,44 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+
+    "CustomerSourceCollectionId": "customers",
+    "CustomerSourceDatabaseId": "customers",
+
+    "AddressSourceCollectionId": "addresses",
+    "AddressSourceDatabaseId": "addresses",
+
+    "ContactSourceCollectionId": "contacts",
+    "ContactSourceDatabaseId": "contacts",
+
+    "CustomerDestinationCollectionId": "customers-anonymised",
+    "CustomerDestinationDatabaseId": "customers",
+
+    "AddressDestinationCollectionId": "addresses-anonymised",
+    "AddressDestinationDatabaseId": "addresses",
+
+    "ContactDestinationCollectionId": "contacts-anonymised",
+    "ContactDestinationDatabaseId": "contacts",
+
+
+    ////LOCAL
+    //"Endpoint": "https://localhost:8081",
+    //"Key": "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+
+    //AT
+    "ATEndpoint": "https://dss-at-shared-cdb.documents.azure.com:443/",
+    "ATKey": "gN8fmksIp9YAz7a3GHARnMlr7EdA3MWg3vEVEHkIrWfqHhl9Mpxd651fwmgqfCEgmuFEaGDU3OJLNouL6zlbmQ==",
+
+    //TEST
+    "TESTEndpoint": "https://dss-test-shared-cdb.documents.azure.com:443",
+    "TESTKey": "rCHucaqMfkuOOdYZal5tA7wj4WKskuEZCWI3zPFnymZ2KXRF9qtIc3BDlO8T3NH0FXXiQXtf4hTKn6xaCCqMig==",
+
+    //PREPROD
+    "PREPRODEndpoint": "https://dss-pre-shared-cdb.documents.azure.com:443/",
+    "PREPRODKey": "3rPhdPvdAIjuXdn4JfLzpzPu90EdLXusnTsm20ejr6s8o30WLJS5ehkSiha0VIn360epUoCkPEt13EIResG5WQ=="
+
+
+  }
+}
