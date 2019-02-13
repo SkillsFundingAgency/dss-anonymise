@@ -2,11 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
-using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class Customer : Helpers.AnonHelper, IAnonymise
+    public class Interaction
     {
         [Display(Description = "Unique identifier of a customer")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -122,9 +121,6 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void Anonymise()
-        {
-            GivenName = GetRandomForename(GivenName);
-        }
+        
     }
 }

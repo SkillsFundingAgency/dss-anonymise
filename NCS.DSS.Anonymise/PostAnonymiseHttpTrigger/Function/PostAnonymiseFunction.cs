@@ -15,6 +15,32 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
 {
     public static class PostAnonymiseFunction
     {
+
+        [FunctionName("Anonymise_with_options")]
+        public static async Task<HttpResponseMessage> RunO([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Anonymise/Anonymise_options")]HttpRequestMessage req, ILogger log,
+           [Inject]IResourceHelper resourceHelper,
+           [Inject]IHttpRequestMessageHelper httpRequestMessageHelper,
+           [Inject]IPostAnonymiseHttpTriggerService AnonymisePostService)
+        {
+            Models.RequestOptions rOpts = req.Content.ReadAsAsync<Models.RequestOptions>().GetAwaiter().GetResult();
+
+            if ( !   (req.Headers.Contains("SourceEndPoint")
+                    && req.Headers.Contains("SourceKey")
+                    && req.Headers.Contains("TargetEndPoint")
+                    && req.Headers.Contains("TargetKey"))
+                    )
+                return HttpResponseMessageHelper.BadRequest();
+
+            rOpts.SourceEndPoint = req.Headers.GetValues("SourceEndPoint").FirstOrDefault();
+            rOpts.SourceKey = req.Headers.GetValues("SourceKey").FirstOrDefault();
+            rOpts.TargetEndPoint = req.Headers.GetValues("TargetEndPoint").FirstOrDefault();
+            rOpts.TargetKey = req.Headers.GetValues("TargetKey").FirstOrDefault();
+            await AnonymisePostService.Anonymise(rOpts);
+
+            return HttpResponseMessageHelper.Created("Ok");
+
+        }
+
         [FunctionName("Anonymise_TEST_to_AT")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Anonymise/Test-to-AT")]HttpRequestMessage req, ILogger log,
             [Inject]IResourceHelper resourceHelper,

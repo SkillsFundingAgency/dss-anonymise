@@ -7,6 +7,24 @@ namespace NCS.DSS.Anonymise.Cosmos.Helper
 {
     public class DocumentDBHelper : IDocumentDBHelper
     {
+        public const string ActionPlanResource = "ActionPlan";
+
+        public string GetCollectionName(string resource)
+        {
+            string retString = "";
+            switch ( resource)
+            {
+                case ActionPlanResource:
+                    retString = "ActionPlans";
+                    break;
+            }
+            return retString;
+        }
+
+        public Uri GetUri( string database, string collection)
+        {
+            return UriFactory.CreateDocumentCollectionUri(database, collection);
+        }
         private Uri _customerSourceDocumentCollectionUri;
         private readonly string _customerSourceDatabaseId = ConfigurationManager.AppSettings["CustomerSourceDatabaseId"];
         private readonly string _customerSourceCollectionId = ConfigurationManager.AppSettings["CustomerSourceCollectionId"];
@@ -19,7 +37,10 @@ namespace NCS.DSS.Anonymise.Cosmos.Helper
         private readonly string _contactSourceDatabaseId = ConfigurationManager.AppSettings["ContactSourceDatabaseId"];
         private readonly string _contactSourceCollectionId = ConfigurationManager.AppSettings["ContactSourceCollectionId"];
 
-        
+        private Uri _actionPlanSourceDocumentCollectionUri;
+        private readonly string _actionPlanSourceDatabaseId = ConfigurationManager.AppSettings["ActionPlanSourceDatabaseId"];
+        private readonly string _actionPlanSourceCollectionId = ConfigurationManager.AppSettings["ActionPlanSourceCollectionId"];
+
         private Uri _customerDestinationDocumentCollectionUri;
         private readonly string _customerDestinationDatabaseId = ConfigurationManager.AppSettings["CustomerDestinationDatabaseId"];
         private readonly string _customerDestinationCollectionId = ConfigurationManager.AppSettings["CustomerDestinationCollectionId"];
@@ -124,6 +145,8 @@ namespace NCS.DSS.Anonymise.Cosmos.Helper
         }
 
         #endregion   
+
+
 
     }
 }
