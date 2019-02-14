@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class WebChat  : IAnonymise
+    public class WebChat  : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier of the web chat record.")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -67,59 +68,12 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
-        {
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
-
-            if (WebChatStartDateandTime.HasValue && WebChatEndDateandTime.HasValue)
-                WebChatDuration = WebChatEndDateandTime.Value.Subtract(WebChatStartDateandTime.Value);
-        }
-
-        public void SetIds(Guid customerId, Guid interactionId, string touchpointId)
-        {
-            WebChatId = Guid.NewGuid();
-            CustomerId = customerId;
-            InteractionId = interactionId;
-            LastModifiedTouchpointId = touchpointId;
-        }
         public void Anonymise()
         {
-
+            WebChatNarrative = RandomiseText(WebChatNarrative);
         }
 
-     /*   public void Patch(WebChatPatch webChatPatch)
-        {
-            if (webChatPatch == null)
-                return;
-
-            if (!string.IsNullOrEmpty(webChatPatch.DigitalReference))
-                DigitalReference = webChatPatch.DigitalReference;
-
-            if (webChatPatch.WebChatStartDateandTime.HasValue)
-                WebChatStartDateandTime = webChatPatch.WebChatStartDateandTime;
-
-            if (webChatPatch.WebChatEndDateandTime.HasValue)
-                WebChatEndDateandTime = webChatPatch.WebChatEndDateandTime;
-
-            if (webChatPatch.WebChatDuration.HasValue)
-                WebChatDuration = webChatPatch.WebChatDuration;
-
-            if (!string.IsNullOrEmpty(webChatPatch.WebChatNarrative))
-                WebChatNarrative = webChatPatch.WebChatNarrative;
-
-            if (webChatPatch.SentToCustomer.HasValue)
-                SentToCustomer = webChatPatch.SentToCustomer;
-
-            if (webChatPatch.DateandTimeSentToCustomers.HasValue)
-                DateandTimeSentToCustomers = webChatPatch.DateandTimeSentToCustomers;
-
-            if (webChatPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = webChatPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(webChatPatch.LastModifiedTouchpointId))
-                LastModifiedTouchpointId = webChatPatch.LastModifiedTouchpointId;
-        }*/
+    
     }
 
 }

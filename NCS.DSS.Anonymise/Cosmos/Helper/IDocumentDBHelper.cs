@@ -4,12 +4,7 @@ namespace NCS.DSS.Anonymise.Cosmos.Helper
 {
     public interface IDocumentDBHelper
     {
-        Uri CreateSourceCustomerDocumentCollectionUri();
-        Uri CreateSourceAddressDocumentCollectionUri();
-        Uri CreateSourceContactDocumentCollectionUri();
-
-        Uri CreateDestinationCustomerDocumentCollectionUri();
-        Uri CreateDestinationAddressDocumentCollectionUri();
-        Uri CreateDestinationContactDocumentCollectionUri();
+        string GetCollectionName(string resource);
+        Uri GetUri(string database, string collection);
     }
 }

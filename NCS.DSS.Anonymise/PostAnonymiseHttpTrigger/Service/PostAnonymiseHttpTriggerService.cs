@@ -10,14 +10,14 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Service
     {
 
 
-        public async Task Anonymise()
+      /*  public async Task Anonymise()
         {
-            var documentDbProvider = new DocumentDBProvider();
+            //var documentDbProvider = new DocumentDBProvider();
 
-            await documentDbProvider.AnonymiseCustomerData();
+           /* await documentDbProvider.AnonymiseCustomerData();
             await documentDbProvider.AnonymiseAddressData();
-            await documentDbProvider.AnonymiseContactDetailsData();
-        }
+            await documentDbProvider.AnonymiseContactDetailsData();*/
+        //}*/
 
         public async Task Anonymise(RequestOptions requestOptions)
         {
@@ -27,61 +27,64 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Service
             documentDbProvider.SetTargetEndPoint(requestOptions.TargetEndPoint);
             documentDbProvider.SetSourceKey(requestOptions.SourceKey);
             documentDbProvider.SetTargetKey(requestOptions.TargetKey);
+            documentDbProvider.TargetPostFix = requestOptions.TargetPostfix;
 
             if (requestOptions.CopyCustomer.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseCustomerData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Customer>(CosmosConstants.CustomerDB, CosmosConstants.CustomerCol);
             }
             if (requestOptions.CopyAddress.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseAddressData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Address>(CosmosConstants.AddressDB, CosmosConstants.AddressCol);
             }
             if (requestOptions.CopyContacts.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseContactDetailsData();
+                await documentDbProvider.AnonymiseCollectionData<Models.ContactDetails>(CosmosConstants.ContactDB, CosmosConstants.ContactCol);
             }
             if (requestOptions.CopyActionPlans.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseActionPlanData();
+                await documentDbProvider.AnonymiseCollectionData<Models.ActionPlan>(CosmosConstants.ActionPlanDB, CosmosConstants.ActionPlanCol);
             }
             if (requestOptions.CopyActions.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseActionData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Action>(CosmosConstants.ActionDB, CosmosConstants.ActionCol);
             }
             if (requestOptions.CopyInteractions.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseInteractionData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Interaction>(CosmosConstants.InteractionDB, CosmosConstants.InteractionCol);
             }
             if (requestOptions.CopySessions.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseSessionData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Session>(CosmosConstants.SessionDB, CosmosConstants.SessionCol);
             }
             if (requestOptions.CopyGoals.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseGoalData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Goal>(CosmosConstants.GoalDB, CosmosConstants.GoalCol);
             }
             if (requestOptions.CopyOutcomes.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseOutcomeData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Outcome>(CosmosConstants.OutcomeDB, CosmosConstants.OutcomeCol);
             }
             if (requestOptions.CopyTransfers.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseTransferData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Transfer>(CosmosConstants.TransferDB, CosmosConstants.TransferCol);
             }
             if (requestOptions.CopyWebChats.ToLower() == "true")
             {
                 await documentDbProvider.AnonymiseCollectionData<Models.WebChat>(CosmosConstants.WebChatDB, CosmosConstants.WebChatCol);
-               // await documentDbProvider.AnonymiseWebChatData();
-            }
+             }
             if (requestOptions.CopySubscriptions.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseSubscriptionData();
+                await documentDbProvider.AnonymiseCollectionData<Models.Subscription>(CosmosConstants.SubscriptionDB, CosmosConstants.SubscriptionCol);
             }
             if (requestOptions.CopyAdviserDetails.ToLower() == "true")
             {
-                await documentDbProvider.AnonymiseAdviserDetailData();
+                await documentDbProvider.AnonymiseCollectionData<Models.AdviserDetail>(CosmosConstants.AdviserDetailDB, CosmosConstants.AdviserDetailCol);
             }
-            // diversity
+            if (requestOptions.CopyDiversityDetails.ToLower() == "true")
+            {
+                await documentDbProvider.AnonymiseCollectionData<Models.DiverstityDetails>(CosmosConstants.DiversityDetailDB, CosmosConstants.DiversityDetailCol);
+            }
         }
     }
 }

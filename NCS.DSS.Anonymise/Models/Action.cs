@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class Action // : IAction
+    public class Action  : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier for a action record")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -92,59 +93,10 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
+        public void Anonymise()
         {
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
-
-            if (ActionStatus == null)
-                ActionStatus = ReferenceData.ActionStatus.NotStarted;
-        }
-
-        public void SetIds(Guid customerId, Guid actionPlanId, string touchpointId)
-        {
-            ActionId = Guid.NewGuid();
-            CustomerId = customerId;
-            ActionPlanId = actionPlanId;
-            LastModifiedTouchpointId = touchpointId;
-        }
-
-      /*  public void Patch(ActionPatch actionPatch)
-        {
-            if (actionPatch == null)
-                return;
-
-            if (actionPatch.DateActionAgreed.HasValue)
-                DateActionAgreed = actionPatch.DateActionAgreed;
-
-            if (actionPatch.DateActionAimsToBeCompletedBy.HasValue)
-                DateActionAimsToBeCompletedBy = actionPatch.DateActionAimsToBeCompletedBy;
-
-            if (actionPatch.DateActionActuallyCompleted.HasValue)
-                DateActionActuallyCompleted = actionPatch.DateActionActuallyCompleted;
-
-            if (!string.IsNullOrWhiteSpace(actionPatch.ActionSummary))
-                ActionSummary = actionPatch.ActionSummary;
-
-            if (!string.IsNullOrWhiteSpace(actionPatch.SignpostedTo))
-                SignpostedTo = actionPatch.SignpostedTo;
-
-            if (actionPatch.ActionType.HasValue)
-                ActionType = actionPatch.ActionType;
-
-            if (actionPatch.ActionStatus.HasValue)
-                ActionStatus = actionPatch.ActionStatus;
-
-            if (actionPatch.PersonResponsible.HasValue)
-                PersonResponsible = actionPatch.PersonResponsible;
-
-            if (actionPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = actionPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(actionPatch.LastModifiedTouchpointId))
-                LastModifiedTouchpointId = actionPatch.LastModifiedTouchpointId;
-        }*/
-
+            ActionSummary = RandomiseText(ActionSummary);
+            SignpostedTo = RandomiseText(SignpostedTo);
+        }        
     }
-
 }

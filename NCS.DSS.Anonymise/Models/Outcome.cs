@@ -3,31 +3,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public enum OutcomeType
-    {
-
-        [Description("Customer Satisfaction")]
-        CustomerSatisfaction = 1,
-
-        [Description("Career Management")]
-        CareersManagement = 2,
-
-        [Description("Sustainable Employment")]
-        SustainableEmployment = 3,
-
-        [Description("Accredited Learning")]
-        AccreditedLearning = 4,
-
-        [Description("Career Progression")]
-        CareerProgression = 5,
-
-    }
-
-
-    public class Outcome //: IOutcomes
+    public class Outcome : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier of the Outcomes record.")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -78,46 +58,10 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
+        public void Anonymise()
         {
 
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
         }
-
-        public void SetIds(Guid customerId, Guid actionPlanId, string touchpointId)
-        {
-            OutcomeId = Guid.NewGuid();
-            CustomerId = customerId;
-            ActionPlanId = actionPlanId;
-            TouchpointId = touchpointId;
-            LastModifiedTouchpointId = touchpointId;
-        }
-
-     /*   public void Patch(OutcomesPatch outcomesPatch)
-        {
-            if (outcomesPatch == null)
-                return;
-
-            if (outcomesPatch.OutcomeType.HasValue)
-                OutcomeType = outcomesPatch.OutcomeType;
-
-            if (outcomesPatch.OutcomeClaimedDate.HasValue)
-                OutcomeClaimedDate = outcomesPatch.OutcomeClaimedDate.Value;
-
-            if (outcomesPatch.OutcomeEffectiveDate.HasValue)
-                OutcomeEffectiveDate = outcomesPatch.OutcomeEffectiveDate;
-
-            if (!string.IsNullOrEmpty(outcomesPatch.TouchpointId))
-                TouchpointId = outcomesPatch.TouchpointId;
-
-            if (outcomesPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = outcomesPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(outcomesPatch.LastModifiedTouchpointId))
-                LastModifiedTouchpointId = outcomesPatch.LastModifiedTouchpointId;
-
-        }*/
     }
 
 }

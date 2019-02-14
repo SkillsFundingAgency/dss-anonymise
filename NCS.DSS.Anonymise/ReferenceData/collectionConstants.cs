@@ -25,7 +25,7 @@ namespace NCS.DSS.Anonymise.ReferenceData
         public const string ActionCol = "actions";
 
         public const string AdviserDetailDB = "adviserdetails";
-        public const string AdviserDetailsCol = "adviserdetails";
+        public const string AdviserDetailCol = "adviserdetails";
 
         public const string GoalDB = "goals";
         public const string GoalCol = "goals";

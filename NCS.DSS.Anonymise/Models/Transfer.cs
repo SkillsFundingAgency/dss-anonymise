@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class Transfer //: ITransfer
+    public class Transfer : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier of the transfer record.")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -67,54 +68,11 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
+  
+        public void Anonymise()
         {
-
-            if (!DateandTimeOfTransfer.HasValue)
-                DateandTimeOfTransfer = DateTime.UtcNow;
-
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
+            Context = RandomiseText(Context);
         }
-
-        public void SetIds(Guid customerId, Guid interactionId, string touchpointId)
-        {
-            TransferId = Guid.NewGuid();
-            CustomerId = customerId;
-            InteractionId = interactionId;
-            LastModifiedTouchpointId = touchpointId;
-            OriginatingTouchpointId = touchpointId;
-        }
-
-        /*  public void Patch(TransferPatch transferPatch)
-          {
-              if (transferPatch == null)
-                  return;
-
-              if (!string.IsNullOrEmpty(transferPatch.TargetTouchpointId))
-                  TargetTouchpointId = transferPatch.TargetTouchpointId;
-
-              if (!string.IsNullOrEmpty(transferPatch.Context))
-                  Context = transferPatch.Context;
-
-              if (transferPatch.DateandTimeOfTransfer.HasValue)
-                  DateandTimeOfTransfer = transferPatch.DateandTimeOfTransfer;
-
-              if (transferPatch.DateandTimeofTransferAccepted.HasValue)
-                  DateandTimeofTransferAccepted = transferPatch.DateandTimeofTransferAccepted;
-
-              if (transferPatch.RequestedCallbackTime.HasValue)
-                  RequestedCallbackTime = transferPatch.RequestedCallbackTime;
-
-              if (transferPatch.ActualCallbackTime.HasValue)
-                  ActualCallbackTime = transferPatch.ActualCallbackTime;
-
-              if (transferPatch.LastModifiedDate.HasValue)
-                  LastModifiedDate = transferPatch.LastModifiedDate;
-
-              if (!string.IsNullOrEmpty(transferPatch.LastModifiedTouchpointId))
-                  LastModifiedTouchpointId = transferPatch.LastModifiedTouchpointId;
-          }*/
 
     }
 }

@@ -10,6 +10,7 @@ namespace NCS.DSS.Anonymise.Models
     public interface IAnonymise
 
     {
+        void SetRandomSeed(Random randSeed);
         void Anonymise();
     }
 }

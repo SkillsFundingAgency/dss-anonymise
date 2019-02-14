@@ -5,7 +5,6 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Service
 {
     public interface IPostAnonymiseHttpTriggerService
     {
-        Task Anonymise();
         Task Anonymise(RequestOptions r);
     }
 }

@@ -8,8 +8,7 @@ namespace NCS.DSS.Anonymise.Cosmos.Provider
 {
     public interface IDocumentDBProvider
     {
-        Task AnonymiseCustomerData();
-        Task AnonymiseAddressData();
-        Task AnonymiseContactDetailsData();
+       Task<List<T>> GetAllDocuments<T>(string database, string collection);
+       Task AnonymiseCollectionData<T>(string database, string collection) where T : Models.IAnonymise;
     }
 }

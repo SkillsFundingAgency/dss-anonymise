@@ -125,6 +125,10 @@ namespace NCS.DSS.Anonymise.Models
         public void Anonymise()
         {
             GivenName = GetRandomForename(GivenName);
+            FamilyName = GetRandomSurname(FamilyName);
+            UniqueLearnerNumber = GetRandomNumberString(1000000000, 9999999999);
+            DateofBirth = RandomDate();
+            IntroducedByAdditionalInfo = RandomiseText(IntroducedByAdditionalInfo);
         }
     }
 }

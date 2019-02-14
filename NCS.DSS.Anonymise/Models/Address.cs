@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class Address
+    public class Address : AnonHelper, IAnonymise
     {
         private const string AddressRegEx = @"[A-Za-z0-9 ~!@&amp;'\()*+,\-.\/:;]{1,100}";
         private const string PostcodeRegEx = @"([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})";
@@ -87,5 +88,18 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
+        public void Anonymise()
+        {
+            Address1 = RandomiseText(Address1);
+            Address2 = RandomiseText(Address2);
+            Address3 = RandomiseText(Address3);
+            Address4 = RandomiseText(Address4);
+            Address5 = RandomiseText(Address5);
+            PostCode = RandomiseText(PostCode);
+            AlternativePostCode = RandomiseText(AlternativePostCode);
+            Latitude = RandomiseDecimal(Convert.ToDecimal(Latitude));
+            Longitude = RandomiseDecimal(Convert.ToDecimal(Longitude));
+
+        }
     }
 }

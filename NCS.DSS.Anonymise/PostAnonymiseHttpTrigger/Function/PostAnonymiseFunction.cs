@@ -24,10 +24,11 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
         {
             Models.RequestOptions rOpts = req.Content.ReadAsAsync<Models.RequestOptions>().GetAwaiter().GetResult();
 
-            if ( !   (req.Headers.Contains("SourceEndPoint")
+            if (!(req.Headers.Contains("SourceEndPoint")
                     && req.Headers.Contains("SourceKey")
                     && req.Headers.Contains("TargetEndPoint")
                     && req.Headers.Contains("TargetKey"))
+                    
                     )
                 return HttpResponseMessageHelper.BadRequest();
 
@@ -35,12 +36,16 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
             rOpts.SourceKey = req.Headers.GetValues("SourceKey").FirstOrDefault();
             rOpts.TargetEndPoint = req.Headers.GetValues("TargetEndPoint").FirstOrDefault();
             rOpts.TargetKey = req.Headers.GetValues("TargetKey").FirstOrDefault();
+            if (req.Headers.Contains("TargetPostFix"))
+            {
+                rOpts.TargetPostfix = req.Headers.GetValues("TargetPostFix").FirstOrDefault();
+            }
             await AnonymisePostService.Anonymise(rOpts);
 
             return HttpResponseMessageHelper.Created("Ok");
 
         }
-
+        /*
         [FunctionName("Anonymise_TEST_to_AT")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Anonymise/Test-to-AT")]HttpRequestMessage req, ILogger log,
             [Inject]IResourceHelper resourceHelper,
@@ -48,7 +53,7 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
             [Inject]IPostAnonymiseHttpTriggerService AnonymisePostService)
         {
 
-            await AnonymisePostService.Anonymise();
+          //  await AnonymisePostService.Anonymise();
 
             return HttpResponseMessageHelper.Created("Ok");
 
@@ -62,7 +67,7 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
             [Inject]IPostAnonymiseHttpTriggerService AnonymisePostService)
         {
 
-            await AnonymisePostService.Anonymise();
+            //await AnonymisePostService.Anonymise();
 
             return HttpResponseMessageHelper.Created("Ok");
 
@@ -76,12 +81,12 @@ namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Function
         [Inject]IPostAnonymiseHttpTriggerService AnonymisePostService)
         {
 
-            await AnonymisePostService.Anonymise();
+            //await AnonymisePostService.Anonymise();
 
             return HttpResponseMessageHelper.Created("Ok");
 
         }
-
+        */
 
     }
 }

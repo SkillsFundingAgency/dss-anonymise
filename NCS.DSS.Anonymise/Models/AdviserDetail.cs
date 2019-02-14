@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class AdviserDetail //: IAdviserDetail
+    public class AdviserDetail : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier of the adviser involved in the interaction.")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -38,35 +39,13 @@ namespace NCS.DSS.Anonymise.Models
         [Display(Description = "Identifier of the touchpoint who made the last change to the record")]
         [Example(Description = "0000000001")] public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
+        public void Anonymise()
         {
-            var adviserDetailId = Guid.NewGuid();
-            AdviserDetailId = adviserDetailId;
-
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
+            AdviserName = RandomiseText(AdviserName);
+            AdviserEmailAddress = RandomiseText(AdviserEmailAddress);
+            AdviserContactNumber = RandomPhoneNumber();
         }
-
-       /* public void Patch(AdviserDetailPatch adviserDetailPatch)
-        {
-            if (adviserDetailPatch == null)
-                return;
-
-            if (!string.IsNullOrEmpty(adviserDetailPatch.AdviserName))
-                AdviserName = adviserDetailPatch.AdviserName;
-
-            if (!string.IsNullOrEmpty(adviserDetailPatch.AdviserEmailAddress))
-                AdviserEmailAddress = adviserDetailPatch.AdviserEmailAddress;
-
-            if (!string.IsNullOrEmpty(adviserDetailPatch.AdviserContactNumber))
-                AdviserContactNumber = adviserDetailPatch.AdviserContactNumber;
-
-            if (adviserDetailPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = adviserDetailPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(adviserDetailPatch.LastModifiedTouchpointId))
-                LastModifiedTouchpointId = adviserDetailPatch.LastModifiedTouchpointId;
-        }*/
+  
     }
  
 }

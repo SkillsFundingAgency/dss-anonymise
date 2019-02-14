@@ -3,27 +3,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public enum GoalType
-    {
-        Skills = 1,
-        Work = 2,
-        Learning = 3,
-        Other = 99
-    }
 
-    public enum GoalStatus
-    {
-        [Description("In progress")]
-        InProgress = 1,
-        Achieved = 2,
-        [Description("No longer relevant")]
-        NoLongerRelevant = 99
-    }
-
-    public class Goal //: IGoal
+    public class Goal : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier for a goal record")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -87,55 +72,10 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedBy { get; set; }
 
-       /* public void SetDefaultValues()
+        public void Anonymise()
         {
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
-
-            if (GoalType == null)
-                GoalType = ReferenceData.GoalType.Other;
-
-            if (GoalStatus == null)
-                GoalStatus = ReferenceData.GoalStatus.NoLongerRelevant;
+            GoalSummary = RandomiseText(GoalSummary);
         }
-
-        public void SetIds(Guid customerId, Guid actionPlanId, string touchpointId)
-        {
-            GoalId = Guid.NewGuid();
-            CustomerId = customerId;
-            ActionPlanId = actionPlanId;
-            LastModifiedBy = touchpointId;
-        }
-
-        /*public void Patch(GoalPatch goalPatch)
-        {
-            if (goalPatch == null)
-                return;
-
-            if (goalPatch.DateGoalCaptured.HasValue)
-                DateGoalCaptured = goalPatch.DateGoalCaptured;
-
-            if (goalPatch.DateGoalShouldBeCompletedBy.HasValue)
-                DateGoalShouldBeCompletedBy = goalPatch.DateGoalShouldBeCompletedBy;
-
-            if (goalPatch.DateGoalAchieved.HasValue)
-                DateGoalAchieved = goalPatch.DateGoalAchieved;
-
-            if (!string.IsNullOrEmpty(goalPatch.GoalSummary))
-                GoalSummary = goalPatch.GoalSummary;
-
-            if (goalPatch.GoalType.HasValue)
-                GoalType = goalPatch.GoalType;
-
-            if (goalPatch.GoalStatus.HasValue)
-                GoalStatus = goalPatch.GoalStatus;
-
-            if (goalPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = goalPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(goalPatch.LastModifiedBy))
-                LastModifiedBy = goalPatch.LastModifiedBy;
-        }*/
     }
 
 }

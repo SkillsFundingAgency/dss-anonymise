@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
-    public class ContactDetails
+    public class ContactDetails : AnonHelper, IAnonymise
     {
         [Display(Description = "Unique identifier for a contact record")]
         [Example(Description = "b8592ff8-af97-49ad-9fb2-e5c3c717fd85")]
@@ -51,6 +52,14 @@ namespace NCS.DSS.Anonymise.Models
         [Display(Description = "Identifier of the touchpoint who made the last change to the record")]
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
+
+        public void Anonymise()
+        {
+            MobileNumber = RandomMobile();
+            HomeNumber = RandomPhoneNumber();
+            AlternativeNumber = RandomPhoneNumber();
+            EmailAddress = RandomiseText(EmailAddress);
+        }
 
     }
 }

@@ -12,14 +12,11 @@ namespace NCS.DSS.Anonymise.Models
         public string SourceKey { get; set; }
         public string TargetEndPoint { get; set; }
         public string TargetKey { get; set; }
+        public string TargetPostfix { get; set; }
         public string CopyCustomer { get; set; } = "false";
-        public string AnonCustomer { get; set; } = "false";
         public string CopyAddress { get; set; } = "false";
-        public string AnonAddress { get; set; } = "false";
         public string CopyContacts { get; set; } = "false";
-        public string AnonContacts { get; set; } = "false";
         public string CopyActionPlans { get; set; } = "false";
-        //CurrentSituation
         public string CopyActions { get; set; } = "false";
         public string CopyAddresses { get; set; } = "false";
         public string CopyAdviserDetails { get; set; } = "false";

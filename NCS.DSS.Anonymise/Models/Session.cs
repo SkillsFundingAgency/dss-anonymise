@@ -3,11 +3,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using NCS.DSS.Anonymise.Annotations;
 using NCS.DSS.Anonymise.ReferenceData;
+using NCS.DSS.Anonymise.Helpers;
 
 namespace NCS.DSS.Anonymise.Models
 {
   
-    public class Session// : ISession
+    public class Session : AnonHelper, IAnonymise
     {
         private const string PostcodeRegEx = @"([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})";
 
@@ -57,49 +58,11 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
-        public void SetDefaultValues()
+        public void Anonymise()
         {
-            SessionId = Guid.NewGuid();
-
-            if (!LastModifiedDate.HasValue)
-                LastModifiedDate = DateTime.UtcNow;
-
-            if (ReasonForNonAttendance == null)
-                ReasonForNonAttendance = ReferenceData.ReasonForNonAttendance.NotKnown;
+                VenuePostCode = RandomiseText(VenuePostCode);   
         }
 
-        public void SetIds(Guid customerId, Guid interactionId, string touchpointId)
-        {
-            SessionId = Guid.NewGuid();
-            CustomerId = customerId;
-            InteractionId = interactionId;
-            LastModifiedTouchpointId = touchpointId;
-        }
-
-    /*    public void Patch(SessionPatch sessionPatch)
-        {
-            if (sessionPatch == null)
-                return;
-
-            if (sessionPatch.DateandTimeOfSession.HasValue)
-                DateandTimeOfSession = sessionPatch.DateandTimeOfSession;
-
-            if (!string.IsNullOrEmpty(sessionPatch.VenuePostCode))
-                VenuePostCode = sessionPatch.VenuePostCode;
-
-            if (sessionPatch.SessionAttended.HasValue)
-                SessionAttended = sessionPatch.SessionAttended;
-
-            if (sessionPatch.ReasonForNonAttendance.HasValue)
-                ReasonForNonAttendance = sessionPatch.ReasonForNonAttendance.Value;
-
-            if (sessionPatch.LastModifiedDate.HasValue)
-                LastModifiedDate = sessionPatch.LastModifiedDate;
-
-            if (!string.IsNullOrEmpty(sessionPatch.LastModifiedTouchpointId))
-                LastModifiedTouchpointId = sessionPatch.LastModifiedTouchpointId;
-
-        }*/
     }
 
 }
