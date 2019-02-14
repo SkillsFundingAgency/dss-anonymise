@@ -3,6 +3,8 @@
 Runs locally as an azure function / Rest API.
 Drive via postman etc.
 
+http://localhost:7071/api/Anonymise/Anonymise_options
+
 **Required Headers:**
 
 - SourceEndPoint: ... End Point for existing resource
