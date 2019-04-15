@@ -12,5 +12,6 @@ namespace NCS.DSS.Anonymise.Models
     {
         void SetRandomSeed(Random randSeed);
         void Anonymise();
+        string LastModifiedTouchpointId { get; set; }
     }
 }
