@@ -70,10 +70,7 @@ namespace NCS.DSS.Anonymise.Models
         [StringLength(10, MinimumLength = 10)]
         [Display(Description = "Identifier of the touchpoint who made the last change to the record")]
         [Example(Description = "0000000001")]
-        //public string LastModifiedBy { get; set; }
-
-        [Newtonsoft.Json.JsonProperty(PropertyName = "LastModifiedBy")]
-        public string LastModifiedTouchpointId { get; set; }
+        public string LastModifiedBy { get; set; }
 
         public void Anonymise()
         {

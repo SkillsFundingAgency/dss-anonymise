@@ -3,27 +3,20 @@ using System.Net;
 using System.Threading.Tasks;
 using NCS.DSS.Anonymise.Models;
 using NCS.DSS.Anonymise.ReferenceData;
-using Microsoft.Azure.WebJobs.Host;
-
-
 
 namespace NCS.DSS.Anonymise.PostAnonymiseHttpTrigger.Service
 {
     public class PostAnonymiseHttpTriggerService : IPostAnonymiseHttpTriggerService
     {
-        TraceWriter azureFunctionsLogger;
-        public static void TryLog(TraceWriter azureFunctionsLogger)
+
+
+      /*  public async Task Anonymise()
         {
-            azureFunctionsLogger.Info("************** IT WORKED **************");
-        }
+            //var documentDbProvider = new DocumentDBProvider();
 
-        /*  public async Task Anonymise()
-          {
-              //var documentDbProvider = new DocumentDBProvider();
-
-             /* await documentDbProvider.AnonymiseCustomerData();
-              await documentDbProvider.AnonymiseAddressData();
-              await documentDbProvider.AnonymiseContactDetailsData();*/
+           /* await documentDbProvider.AnonymiseCustomerData();
+            await documentDbProvider.AnonymiseAddressData();
+            await documentDbProvider.AnonymiseContactDetailsData();*/
         //}*/
 
         public async Task Anonymise(RequestOptions requestOptions)

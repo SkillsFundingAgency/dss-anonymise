@@ -87,7 +87,7 @@ namespace NCS.DSS.Anonymise.Cosmos.Provider
                     GetAwaiter()
                     .GetResult();
             int iCount = 0;
-            foreach (var item in sourceCollection.Where( x => Convert.ToInt64(x.LastModifiedTouchpointId) < 9000000000))
+            foreach (var item in sourceCollection)
             {
                 iCount++;
                 Console.WriteLine(typeof(T) + " item " + iCount);
