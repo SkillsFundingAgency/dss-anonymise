@@ -21,6 +21,11 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "a79ba4cc-5da5-4eb0-8913-eb5e69f90ab8")]
         public Guid? ActionPlanId { get; set; }
 
+        [StringLength(50)]
+        [Display(Description = "Identifier supplied by the touchpoint to indicate their subcontractor")]
+        [Example(Description = "01234567899876543210")]
+        public string SubcontractorId { get; set; }
+
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Description = "Date the action plan was agreed with the customer.")]

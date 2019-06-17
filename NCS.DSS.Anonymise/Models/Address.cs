@@ -61,12 +61,12 @@ namespace NCS.DSS.Anonymise.Models
         [RegularExpression(@"^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$")]
         [Display(Description = "Geocoded address information")]
         [Example(Description = "-1.50812")]
-        public decimal? Longitude { get; set; }
+        public string Longitude { get; set; }
 
         [RegularExpression(@"^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$")]
         [Display(Description = "Geocoded address information")]
         [Example(Description = "52.40100")]
-        public decimal? Latitude { get; set; }
+        public string Latitude { get; set; }
 
         [DataType(DataType.DateTime)]
         [Display(Description = "Date the customer started residing at this location")]
@@ -88,6 +88,11 @@ namespace NCS.DSS.Anonymise.Models
         [Example(Description = "0000000001")]
         public string LastModifiedTouchpointId { get; set; }
 
+        [StringLength(50)]
+        [Display(Description = "Identifier supplied by the touchpoint to indicate their subcontractor")]
+        [Example(Description = "01234567899876543210")]
+        public string SubcontractorId { get; set; }
+
         public void Anonymise()
         {
             Address1 = RandomiseText(Address1);
@@ -95,10 +100,10 @@ namespace NCS.DSS.Anonymise.Models
             Address3 = RandomiseText(Address3);
             Address4 = RandomiseText(Address4);
             Address5 = RandomiseText(Address5);
-            PostCode = RandomiseText(PostCode);
-            AlternativePostCode = RandomiseText(AlternativePostCode);
-            Latitude = RandomiseDecimal(Convert.ToDecimal(Latitude));
-            Longitude = RandomiseDecimal(Convert.ToDecimal(Longitude));
+            PostCode = GetRandomPostCode();
+            AlternativePostCode = GetRandomPostCode();
+            Latitude = null;
+            Longitude = null;
 
         }
     }
